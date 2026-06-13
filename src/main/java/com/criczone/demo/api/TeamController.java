@@ -233,7 +233,7 @@ public class TeamController {
             finalMembers.add(normalized);
         }
         if (!ownerIncluded) {
-            finalMembers.add(0, Map.of(
+            finalMembers.add(0, ApiSupport.mapOf(
                 "memberId", java.util.UUID.randomUUID().toString(),
                 "player", owner.getId(),
                 "name", owner.getName(),
