@@ -88,7 +88,13 @@ public class BookingController {
         booking.setEndTime(ApiSupport.trim(request.get("endTime")));
         booking.setSlotHours(hours);
         booking.setTotalPrice(Math.round(turf.getBasePricingPerSlot() * hours * 100.0) / 100.0);
-        booking.setBilling(new LinkedHashMap<>(Map.of("invoiceNumber", ApiSupport.invoiceNumber(), "currency", "INR", "paymentStatus", "pending", "paymentMethod", null, "paymentReference", "", "paidAt", null)));
+        booking.setBilling(new LinkedHashMap<>(ApiSupport.mapOf(
+            "invoiceNumber", ApiSupport.invoiceNumber(),
+            "currency", "INR",
+            "paymentStatus", "pending",
+            "paymentMethod", null,
+            "paymentReference", "",
+            "paidAt", null)));
         booking.setCreatedAt(Instant.now());
         booking.setUpdatedAt(Instant.now());
         bookingRepository.save(booking);
