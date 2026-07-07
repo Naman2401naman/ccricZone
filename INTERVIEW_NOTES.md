@@ -30,3 +30,7 @@ The auth filter caches resolved users briefly so every authenticated request doe
 - Replace in-memory auth rate limiting with Redis or an edge/WAF limiter so limits are consistent across app instances.
 - Store password reset tokens in MongoDB or Redis with hashed token values instead of in-memory cache when running multiple instances.
 - Keep OpenAPI and CI required on every PR so API drift is visible before review.
+
+## Frontend and Backend Split
+
+The project is now a two-app repo. `frontend/` is a standalone static PWA that reads the backend URL from `runtime-config.js`, while `backend/` is a Spring Boot API with CORS configured through `CLIENT_URL`. This lets the UI and API deploy independently, scale independently, and use different hosting platforms without coupling frontend releases to backend builds.

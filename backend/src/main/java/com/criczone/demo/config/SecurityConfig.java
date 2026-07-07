@@ -30,20 +30,11 @@ public class SecurityConfig {
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
                 .antMatchers(
-                    "/",
-                    "/index.html",
-                    "/favicon.ico",
-                    "/favicon.ico.png",
-                    "/manifest.webmanifest",
-                    "/sw.js",
-                    "/runtime-config.js",
-                    "/styles.css",
-                    "/script.js",
                     "/swagger-ui.html",
                     "/swagger-ui/**",
+                    "/webjars/**",
                     "/v3/api-docs/**")
                 .permitAll()
-                .antMatchers("/icons/**", "/assets/**", "/css/**", "/js/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/health", "/api/version", "/api/matches/**", "/api/tournaments/**", "/api/turfs/**", "/api/leaderboard/**", "/api/posts/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/users/search-players", "/api/users/nearby-players", "/api/users/player/**", "/api/users/leaderboard/**").permitAll()
                 .antMatchers(HttpMethod.POST,

@@ -1,91 +1,75 @@
 # CricZone
 
-CricZone is a Spring Boot 2.7 + MongoDB cricket platform for player discovery,
-match scoring, tournament management, turf booking, billing, and a Kafka-backed
-booking workflow projection.
+CricZone is now split into two independently deployable apps:
 
-The production UI is served by Spring Boot from `src/main/resources/static`.
-There is no separate committed frontend build step.
+- `frontend/`: Static PWA UI for players, teams, matches, tournaments, turf booking, and billing.
+- `backend/`: Spring Boot 2.7 API with MongoDB, JWT auth, OpenAPI docs, and optional Kafka booking workflow projections.
 
-## Requirements
+## Repository Structure
 
-- Java 11+
-- MongoDB running locally or a `MONGO_URI`
-- `JWT_SECRET` with at least 32 bytes of entropy
-- Optional: Docker for the Kafka booking workflow demo
+```text
+frontend/   Static HTML/CSS/JS app and deployment config
+backend/    Spring Boot API, Maven wrapper, backend docs, and Kafka compose file
+.github/    CI for backend tests and frontend static build
+```
 
-## Run Locally
+## Run Backend
 
 ```powershell
+cd backend
 $env:JWT_SECRET="replace-with-at-least-32-random-bytes"
 .\mvnw spring-boot:run
 ```
 
-Backend and UI:
+Backend URLs:
 
-- App: `http://localhost:8080`
-- API base: `http://localhost:8080/api`
+- API: `http://localhost:8080/api`
 - Health: `http://localhost:8080/api/health`
 - Swagger UI: `http://localhost:8080/swagger-ui.html`
 
-The default MongoDB connection is:
+The default MongoDB connection is `mongodb://localhost:27017/criczone`. Override it with `MONGO_URI`.
 
-```text
-mongodb://localhost:27017/criczone
-```
-
-Override it with:
+## Run Frontend
 
 ```powershell
-$env:MONGO_URI="mongodb://localhost:27017/criczone"
-$env:JWT_SECRET="replace-with-at-least-32-random-bytes"
-.\mvnw spring-boot:run
+cd frontend
+npm run dev
 ```
 
-## Run With Event Sourcing Enabled
+Frontend URL:
 
-Start Kafka:
+- App: `http://localhost:3000`
 
-```powershell
-docker compose -f docker-compose.kafka.yml up -d
+The frontend reads its API URL from `frontend/runtime-config.js`:
+
+```js
+window.__API_BASE__ = "http://localhost:8080/api";
 ```
 
-Run Spring with the Kafka workflow publisher and consumer enabled:
+For production frontend deployment, change that value to your deployed backend API URL.
 
-```powershell
-$env:KAFKA_ENABLED="true"
-$env:KAFKA_BOOTSTRAP_SERVERS="localhost:9092"
-$env:JWT_SECRET="replace-with-at-least-32-random-bytes"
-.\mvnw spring-boot:run
-```
+## Separate Deployment
 
-Then create or update a booking and inspect its workflow timeline:
+Backend deployment:
 
-```text
-GET /api/bookings/{bookingId}/workflow
-GET /api/bookings/{bookingId}/history
-GET /api/bookings/workflow/summary
-```
+1. Deploy the `backend/` folder as the Spring Boot service.
+2. Set `JWT_SECRET`, `MONGO_URI`, and `CLIENT_URL`.
+3. Add Kafka env vars only if booking workflow projections are enabled.
 
-## API Surface
+Frontend deployment:
 
-The API is grouped by domain:
-
-- `/api/users`
-- `/api/teams`
-- `/api/matches`
-- `/api/tournaments`
-- `/api/turfs`
-- `/api/bookings`
-- `/api/posts`
-- `/api/leaderboard`
-- `/api/health`
-- `/api/version`
-
-OpenAPI documentation is available at `/swagger-ui.html` and `/v3/api-docs`.
+1. Edit `frontend/runtime-config.js` to point at the deployed backend.
+2. Run `npm run build` from `frontend/`.
+3. Deploy `frontend/dist/` to a static host.
 
 ## Tests
 
 ```powershell
+cd backend
 .\mvnw test
+
+cd ..\frontend
+npm run build
 ```
+
+CI runs both checks on every push and pull request.

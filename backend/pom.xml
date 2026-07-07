@@ -15,7 +15,7 @@
     <artifactId>criczone-spring</artifactId>
     <version>1.0.0</version>
     <name>criczone-spring</name>
-    <description>Spring Boot port of the CricZone backend and static web app</description>
+    <description>Spring Boot API for the CricZone platform</description>
 
     <properties>
         <java.version>11</java.version>

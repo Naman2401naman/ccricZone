@@ -1,6 +1,6 @@
 # CricZone Spring Backend File Guide
 
-This document explains what each important backend file in the `demo` Spring Boot module does.
+This document explains what each important file in the `backend/` Spring Boot module does.
 
 ## Entry Point
 
@@ -25,7 +25,6 @@ This document explains what each important backend file in the `demo` Spring Boo
 - `config/CacheNames.java`: Central list of cache region names to keep cache annotations consistent.
 - `config/KafkaWorkflowConfig.java`: Creates Kafka producer and consumer factories plus the listener container used by booking workflow events.
 - `config/SecurityConfig.java`: Configures stateless Spring Security, JWT auth, public routes, CORS, and password encoding.
-- `config/WebConfig.java`: Forwards non-API browser routes to `index.html` for the single-page frontend.
 
 ## Domain Models
 
@@ -77,15 +76,10 @@ This document explains what each important backend file in the `demo` Spring Boo
 ## Resources
 
 - `src/main/resources/application.properties`: Runtime configuration for server port, Mongo, JWT, cache, and Kafka settings.
-- `src/main/resources/static/index.html`: Main frontend HTML shell.
-- `src/main/resources/static/script.js`: Frontend application logic and API integration.
-- `src/main/resources/static/styles.css`: Frontend styling.
-- `src/main/resources/static/runtime-config.js`: Client-side runtime configuration injection point.
-- `src/main/resources/static/sw.js`: Service worker for offline caching and install behavior.
-- `src/main/resources/static/manifest.webmanifest`: Progressive web app manifest.
-- `src/main/resources/static/favicon.ico.png`: Browser tab icon.
-- `src/main/resources/static/icons/icon-192.png`: PWA icon for smaller launch surfaces.
-- `src/main/resources/static/icons/icon-512.png`: PWA icon for larger launch surfaces.
+
+## Frontend Boundary
+
+The frontend is intentionally outside this backend module at the repo-level `frontend/` folder. The backend exposes JSON APIs, OpenAPI docs, health checks, and CORS for approved frontend origins. It no longer serves the single-page app from `src/main/resources/static`.
 
 ## Local Utility Files
 

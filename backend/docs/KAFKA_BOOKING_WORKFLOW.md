@@ -78,6 +78,7 @@ If `KAFKA_ENABLED=false`, the app still works, but events are not sent to Kafka 
 Start the broker:
 
 ```powershell
+cd backend
 docker compose -f docker-compose.kafka.yml up -d
 ```
 
@@ -86,6 +87,7 @@ Run the Spring app with Kafka enabled:
 ```powershell
 $env:KAFKA_ENABLED="true"
 $env:KAFKA_BOOTSTRAP_SERVERS="localhost:9092"
+$env:JWT_SECRET="replace-with-at-least-32-random-bytes"
 .\mvnw spring-boot:run
 ```
 
