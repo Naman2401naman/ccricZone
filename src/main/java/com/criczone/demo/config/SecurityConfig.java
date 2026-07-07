@@ -46,7 +46,13 @@ public class SecurityConfig {
                 .antMatchers("/icons/**", "/assets/**", "/css/**", "/js/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/health", "/api/version", "/api/matches/**", "/api/tournaments/**", "/api/turfs/**", "/api/leaderboard/**", "/api/posts/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/users/search-players", "/api/users/nearby-players", "/api/users/player/**", "/api/users/leaderboard/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/users/login", "/api/users/register", "/api/users/signup").permitAll()
+                .antMatchers(HttpMethod.POST,
+                    "/api/users/login",
+                    "/api/users/register",
+                    "/api/users/signup",
+                    "/api/users/forgot-password",
+                    "/api/users/reset-password/**")
+                .permitAll()
                 .antMatchers("/error").permitAll()
                 .anyRequest().authenticated())
             .addFilterBefore(authRateLimitFilter, UsernamePasswordAuthenticationFilter.class)

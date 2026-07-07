@@ -1,11 +1,15 @@
 package com.criczone.demo.service;
 
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 import com.criczone.demo.config.CacheNames;
 import com.criczone.demo.domain.UserDocument;
 import com.criczone.demo.repo.UserRepository;
 import com.criczone.demo.security.JwtService;
 import com.criczone.demo.support.ApiException;
 import com.criczone.demo.support.ApiSupport;
+import java.security.SecureRandom;
+import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -36,6 +40,11 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    private final SecureRandom secureRandom = new SecureRandom();
+    private final Cache<String, String> resetTokens = Caffeine.newBuilder()
+        .expireAfterWrite(Duration.ofMinutes(15))
+        .maximumSize(10_000)
+        .build();
 
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService) {
         this.userRepository = userRepository;
@@ -116,6 +125,54 @@ public class UserService {
         response.put("token", token);
         response.put("user", Map.of("_id", user.getId(), "name", user.getName(), "email", user.getEmail(), "phone", user.getPhone(), "role", user.getRole()));
         return response;
+    }
+
+    public Map<String, Object> logout(@RequestAttribute(value = "currentUser", required = false) UserDocument currentUser) {
+        ApiSupport.requireUser(currentUser);
+        return Map.of("success", true, "message", "Logged out successfully");
+    }
+
+    public Map<String, Object> forgotPassword(Map<String, Object> request) {
+        String email = ApiSupport.trim(request.get("email")).toLowerCase(Locale.ROOT);
+        Map<String, Object> response = new LinkedHashMap<>();
+        response.put("success", true);
+        response.put("message", "If an account exists for that email, a password reset link has been generated.");
+
+        userRepository.findByEmail(email).ifPresent(user -> {
+            String token = newResetToken();
+            resetTokens.put(token, user.getId());
+            response.put("resetToken", token);
+            response.put("resetPath", "/#reset-password?token=" + token);
+        });
+        return response;
+    }
+
+    public Map<String, Object> resetPassword(String token, Map<String, Object> request) {
+        if (token == null || !token.matches("(?i)^[a-f0-9]{64}$")) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Invalid reset token");
+        }
+
+        String userId = resetTokens.getIfPresent(token);
+        if (userId == null) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Reset token is invalid or expired");
+        }
+
+        String password = ApiSupport.trim(request.get("password"));
+        String confirmPassword = ApiSupport.trim(request.get("confirmPassword"));
+        if (password.length() < 8 || password.length() > 128) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Password must be between 8 and 128 characters");
+        }
+        if (!password.equals(confirmPassword)) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Passwords do not match");
+        }
+
+        UserDocument user = userRepository.findById(userId)
+            .orElseThrow(() -> new ApiException(HttpStatus.BAD_REQUEST, "Reset token is invalid or expired"));
+        user.setPassword(passwordEncoder.encode(password));
+        user.setUpdatedAt(Instant.now());
+        userRepository.save(user);
+        resetTokens.invalidate(token);
+        return Map.of("success", true, "message", "Password reset successfully.");
     }
 
     @GetMapping("/profile")
@@ -350,6 +407,16 @@ public class UserService {
 
     private boolean playerTypeBlank(String value) {
         return value == null || value.isBlank();
+    }
+
+    private String newResetToken() {
+        byte[] bytes = new byte[32];
+        secureRandom.nextBytes(bytes);
+        StringBuilder builder = new StringBuilder(bytes.length * 2);
+        for (byte value : bytes) {
+            builder.append(String.format("%02x", value));
+        }
+        return builder.toString();
     }
 
     private List<String> stringList(Object value) {

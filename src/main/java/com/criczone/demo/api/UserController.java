@@ -1,8 +1,10 @@
 package com.criczone.demo.api;
 
 import com.criczone.demo.domain.UserDocument;
+import com.criczone.demo.dto.ApiRequests.ForgotPasswordRequest;
 import com.criczone.demo.dto.ApiRequests.LoginRequest;
 import com.criczone.demo.dto.ApiRequests.RegisterRequest;
+import com.criczone.demo.dto.ApiRequests.ResetPasswordRequest;
 import com.criczone.demo.dto.ApiRequests.UpdateProfileRequest;
 import com.criczone.demo.dto.ApiRequests.UpdateRoleRequest;
 import com.criczone.demo.dto.RequestMaps;
@@ -39,6 +41,22 @@ public class UserController {
     @PostMapping("/login")
     public Map<String, Object> login(@Valid @RequestBody LoginRequest request) {
         return userService.login(RequestMaps.toMap(request));
+    }
+
+    @PostMapping("/logout")
+    public Map<String, Object> logout(@RequestAttribute(value = "currentUser", required = false) UserDocument currentUser) {
+        return userService.logout(currentUser);
+    }
+
+    @PostMapping("/forgot-password")
+    public Map<String, Object> forgotPassword(@Valid @RequestBody ForgotPasswordRequest request) {
+        return userService.forgotPassword(RequestMaps.toMap(request));
+    }
+
+    @PostMapping("/reset-password/{token}")
+    public Map<String, Object> resetPassword(@PathVariable String token,
+                                             @Valid @RequestBody ResetPasswordRequest request) {
+        return userService.resetPassword(token, RequestMaps.toMap(request));
     }
 
     @GetMapping("/profile")

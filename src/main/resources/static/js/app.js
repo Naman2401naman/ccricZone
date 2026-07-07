@@ -321,6 +321,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       status.classList.add("success");
       status.textContent = payload.json?.message ||
         "If an account exists for that email, a password reset link has been sent.";
+      if (payload.json?.resetToken) {
+        window.location.hash = `#reset-password?token=${encodeURIComponent(payload.json.resetToken)}`;
+      }
       forgotPasswordForm.reset();
     } catch (error) {
       status.classList.add("error");
