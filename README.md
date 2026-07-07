@@ -1,36 +1,83 @@
 # CricZone
 
-This repo now has a split setup:
+CricZone is a Spring Boot 2.7 + MongoDB cricket platform for player discovery,
+match scoring, tournament management, turf booking, billing, and a Kafka-backed
+booking workflow projection.
 
-- Spring Boot backend in the repo root
-- React frontend in `frontend/`
+The production UI is served by Spring Boot from `src/main/resources/static`.
+There is no separate committed frontend build step.
 
-The frontend talks to the Spring API over `/api`.
+## Requirements
 
-## Run backend
+- Java 11+
+- MongoDB running locally or a `MONGO_URI`
+- Optional: Docker for the Kafka booking workflow demo
+
+## Run Locally
 
 ```powershell
-./mvnw spring-boot:run
+.\mvnw spring-boot:run
 ```
 
-Backend default:
-- `http://localhost:8080`
+Backend and UI:
+
+- App: `http://localhost:8080`
 - API base: `http://localhost:8080/api`
+- Health: `http://localhost:8080/api/health`
 
-## Run frontend
+The default MongoDB connection is:
 
-```powershell
-cd frontend
-npm install
-npm run dev
+```text
+mongodb://localhost:27017/criczone
 ```
 
-Frontend default:
-- `http://localhost:5173`
-- Set `VITE_API_BASE_URL` in `frontend/.env` if your backend is elsewhere
+Override it with:
 
-## Notes
+```powershell
+$env:MONGO_URI="mongodb://localhost:27017/criczone"
+.\mvnw spring-boot:run
+```
 
-- The Spring controllers are already split by domain: users, teams, matches, tournaments, turfs, bookings, posts, leaderboard, and system health.
-- The React app is a separate IDE-friendly project, so you can run it independently from the backend.
-- The old static frontend still exists under `src/main/resources/static` as a legacy fallback, but the new React app is the intended UI.
+## Run With Event Sourcing Enabled
+
+Start Kafka:
+
+```powershell
+docker compose -f docker-compose.kafka.yml up -d
+```
+
+Run Spring with the Kafka workflow publisher and consumer enabled:
+
+```powershell
+$env:KAFKA_ENABLED="true"
+$env:KAFKA_BOOTSTRAP_SERVERS="localhost:9092"
+.\mvnw spring-boot:run
+```
+
+Then create or update a booking and inspect its workflow timeline:
+
+```text
+GET /api/bookings/{bookingId}/workflow
+GET /api/bookings/workflow/summary
+```
+
+## API Surface
+
+The API is grouped by domain:
+
+- `/api/users`
+- `/api/teams`
+- `/api/matches`
+- `/api/tournaments`
+- `/api/turfs`
+- `/api/bookings`
+- `/api/posts`
+- `/api/leaderboard`
+- `/api/health`
+- `/api/version`
+
+## Tests
+
+```powershell
+.\mvnw test
+```

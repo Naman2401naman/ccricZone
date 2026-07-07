@@ -1,89 +1,0 @@
-[INFO] Scanning for projects...
-Downloading from central: https://repo.maven.apache.org/maven2/org/springframework/boot/maven-metadata.xml
-Downloading from central: https://repo.maven.apache.org/maven2/pl/project13/maven/maven-metadata.xml
-Downloading from central: https://repo.maven.apache.org/maven2/org/flywaydb/maven-metadata.xml
-Downloading from central: https://repo.maven.apache.org/maven2/org/apache/johnzon/maven-metadata.xml
-Progress (1): 249 BProgress (2): 249 B | 237 BProgress (3): 249 B | 237 B | 234 BProgress (4): 249 B | 237 B | 234 B | 249 B                                           Downloaded from central: https://repo.maven.apache.org/maven2/org/springframework/boot/maven-metadata.xml (249 B at 179 B/s)
-Downloading from central: https://repo.maven.apache.org/maven2/org/jooq/maven-metadata.xml
-Downloaded from central: https://repo.maven.apache.org/maven2/pl/project13/maven/maven-metadata.xml (249 B at 179 B/s)
-Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/johnzon/maven-metadata.xml (237 B at 170 B/s)
-Downloading from central: https://repo.maven.apache.org/maven2/org/liquibase/maven-metadata.xml
-Downloading from central: https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/maven-metadata.xml
-Downloaded from central: https://repo.maven.apache.org/maven2/org/flywaydb/maven-metadata.xml (234 B at 167 B/s)
-Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-metadata.xml
-Progress (1): 375 BProgress (2): 375 B | 398 BProgress (3): 375 B | 398 B | 4.6 kBProgress (3): 375 B | 398 B | 9.7 kBProgress (3): 375 B | 398 B | 14 kB Progress (4): 375 B | 398 B | 14 kB | 394 B                                           Downloaded from central: https://repo.maven.apache.org/maven2/org/jooq/maven-metadata.xml (398 B at 5.2 kB/s)
-Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-metadata.xml (14 kB at 207 kB/s)
-Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/maven-metadata.xml
-Downloaded from central: https://repo.maven.apache.org/maven2/org/liquibase/maven-metadata.xml (394 B at 4.7 kB/s)
-Downloaded from central: https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/maven-metadata.xml (375 B at 4.2 kB/s)
-Progress (1): 3.1 kBProgress (1): 7.7 kBProgress (1): 12 kB Progress (1): 17 kBProgress (1): 20 kBProgress (1): 21 kB                   Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/maven-metadata.xml (21 kB at 161 kB/s)
-[INFO] 
-[INFO] --------------------< com.criczone:criczone-spring >--------------------
-[INFO] Building criczone-spring 1.0.0
-[INFO]   from pom.xml
-[INFO] --------------------------------[ jar ]---------------------------------
-[INFO] 
-[INFO] >>> spring-boot:2.7.18:run (default-cli) > test-compile @ criczone-spring >>>
-[INFO] 
-[INFO] --- resources:3.2.0:resources (default-resources) @ criczone-spring ---
-[INFO] Using 'UTF-8' encoding to copy filtered resources.
-[INFO] Using 'UTF-8' encoding to copy filtered properties files.
-[INFO] Copying 1 resource
-[INFO] Copying 9 resources
-[INFO] 
-[INFO] --- compiler:3.10.1:compile (default-compile) @ criczone-spring ---
-[INFO] Nothing to compile - all classes are up to date
-[INFO] 
-[INFO] --- resources:3.2.0:testResources (default-testResources) @ criczone-spring ---
-[INFO] Using 'UTF-8' encoding to copy filtered resources.
-[INFO] Using 'UTF-8' encoding to copy filtered properties files.
-[INFO] skip non existing resourceDirectory C:\Users\naman\Downloads\demo\demo\src\test\resources
-[INFO] 
-[INFO] --- compiler:3.10.1:testCompile (default-testCompile) @ criczone-spring ---
-[INFO] Nothing to compile - all classes are up to date
-[INFO] 
-[INFO] <<< spring-boot:2.7.18:run (default-cli) < test-compile @ criczone-spring <<<
-[INFO] 
-[INFO] 
-[INFO] --- spring-boot:2.7.18:run (default-cli) @ criczone-spring ---
-[INFO] Attaching agents: []
-16:12:25.758 [Thread-0] DEBUG org.springframework.boot.devtools.restart.classloader.RestartClassLoader - Created RestartClassLoader org.springframework.boot.devtools.restart.classloader.RestartClassLoader@67d139f7
-
-  .   ____          _            __ _ _
- /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
-( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
- \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
-  '  |____| .__|_| |_|_| |_\__, | / / / /
- =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::               (v2.7.18)
-
-2026-03-30 16:12:27.058  INFO 26116 --- [  restartedMain] com.criczone.demo.DemoApplication        : Starting DemoApplication using Java 11.0.27 on LAPTOP-QAPDAB2H with PID 26116 (C:\Users\naman\Downloads\demo\demo\target\classes started by naman in C:\Users\naman\Downloads\demo\demo)
-2026-03-30 16:12:27.061  INFO 26116 --- [  restartedMain] com.criczone.demo.DemoApplication        : No active profile set, falling back to 1 default profile: "default"
-2026-03-30 16:12:27.216  INFO 26116 --- [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
-2026-03-30 16:12:27.217  INFO 26116 --- [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
-2026-03-30 16:12:30.949  INFO 26116 --- [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
-2026-03-30 16:12:31.277  INFO 26116 --- [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 310 ms. Found 7 MongoDB repository interfaces.
-2026-03-30 16:12:35.009  INFO 26116 --- [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
-2026-03-30 16:12:35.041  INFO 26116 --- [  restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2026-03-30 16:12:35.043  INFO 26116 --- [  restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.83]
-2026-03-30 16:12:35.468  INFO 26116 --- [  restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2026-03-30 16:12:35.491  INFO 26116 --- [  restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 8273 ms
-2026-03-30 16:12:36.669  INFO 26116 --- [  restartedMain] org.mongodb.driver.client                : MongoClient with metadata {"driver": {"name": "mongo-java-driver|sync|spring-boot", "version": "4.6.1"}, "os": {"type": "Windows", "name": "Windows 11", "architecture": "amd64", "version": "10.0"}, "platform": "Java/Oracle Corporation/11.0.27+8-LTS-232"} created with settings MongoClientSettings{readPreference=primary, writeConcern=WriteConcern{w=null, wTimeout=null ms, journal=null}, retryWrites=true, retryReads=true, readConcern=ReadConcern{level=null}, credential=null, streamFactoryFactory=null, commandListeners=[io.micrometer.core.instrument.binder.mongodb.MongoMetricsCommandListener@456dae3c], codecRegistry=ProvidersCodecRegistry{codecProviders=[ValueCodecProvider{}, BsonValueCodecProvider{}, DBRefCodecProvider{}, DBObjectCodecProvider{}, DocumentCodecProvider{}, IterableCodecProvider{}, MapCodecProvider{}, GeoJsonCodecProvider{}, GridFSFileCodecProvider{}, Jsr310CodecProvider{}, JsonObjectCodecProvider{}, BsonCodecProvider{}, EnumCodecProvider{}, com.mongodb.Jep395RecordCodecProvider@2e942f50]}, clusterSettings={hosts=[localhost:27017], srvServiceName=mongodb, mode=SINGLE, requiredClusterType=UNKNOWN, requiredReplicaSetName='null', serverSelector='null', clusterListeners='[]', serverSelectionTimeout='30000 ms', localThreshold='30000 ms'}, socketSettings=SocketSettings{connectTimeoutMS=10000, readTimeoutMS=0, receiveBufferSize=0, sendBufferSize=0}, heartbeatSocketSettings=SocketSettings{connectTimeoutMS=10000, readTimeoutMS=10000, receiveBufferSize=0, sendBufferSize=0}, connectionPoolSettings=ConnectionPoolSettings{maxSize=100, minSize=0, maxWaitTimeMS=120000, maxConnectionLifeTimeMS=0, maxConnectionIdleTimeMS=0, maintenanceInitialDelayMS=0, maintenanceFrequencyMS=60000, connectionPoolListeners=[io.micrometer.core.instrument.binder.mongodb.MongoMetricsConnectionPoolListener@ca0803a], maxConnecting=2}, serverSettings=ServerSettings{heartbeatFrequencyMS=10000, minHeartbeatFrequencyMS=500, serverListeners='[]', serverMonitorListeners='[]'}, sslSettings=SslSettings{enabled=false, invalidHostNameAllowed=false, context=null}, applicationName='null', compressorList=[], uuidRepresentation=JAVA_LEGACY, serverApi=null, autoEncryptionSettings=null, contextProvider=null}
-2026-03-30 16:12:36.996  INFO 26116 --- [localhost:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:1, serverValue:1}] to localhost:27017
-2026-03-30 16:12:36.997  INFO 26116 --- [localhost:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:2, serverValue:2}] to localhost:27017
-2026-03-30 16:12:36.998  INFO 26116 --- [localhost:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=25, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=317476800}
-2026-03-30 16:12:38.401  INFO 26116 --- [  restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
-2026-03-30 16:12:38.768  WARN 26116 --- [  restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
-
-Using generated security password: 3b499841-8b1b-4fc7-b29a-ed18fc0a4d71
-
-This generated password is for development use only. Your security configuration must be updated before running your application in production.
-
-2026-03-30 16:12:39.452  INFO 26116 --- [  restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@33301662, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@30391eea, org.springframework.security.web.context.SecurityContextPersistenceFilter@68f2a7cc, org.springframework.security.web.header.HeaderWriterFilter@630075a9, org.springframework.web.filter.CorsFilter@366d298a, org.springframework.security.web.authentication.logout.LogoutFilter@178e2385, com.criczone.demo.security.JwtAuthFilter@7d5e0630, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@63869335, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@75cf4faf, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6f5ce20, org.springframework.security.web.session.SessionManagementFilter@2875fa8e, org.springframework.security.web.access.ExceptionTranslationFilter@6c82b1c8, org.springframework.security.web.access.intercept.AuthorizationFilter@4b42c2b3]
-2026-03-30 16:12:40.227  INFO 26116 --- [  restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
-2026-03-30 16:12:41.273  INFO 26116 --- [  restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoint(s) beneath base path '/actuator'
-2026-03-30 16:12:41.527  INFO 26116 --- [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
-2026-03-30 16:12:41.563  INFO 26116 --- [  restartedMain] com.criczone.demo.DemoApplication        : Started DemoApplication in 15.757 seconds (JVM running for 18.483)
-2026-03-30 16:12:56.497  INFO 26116 --- [nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2026-03-30 16:12:56.498  INFO 26116 --- [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2026-03-30 16:12:56.506  INFO 26116 --- [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 7 ms
