@@ -20,11 +20,10 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, Object>> handleValidation(MethodArgumentNotValidException ex, HttpServletRequest request) {
-        String message = ex.getBindingResult().getFieldErrors().stream()
-            .findFirst()
-            .map(error -> error.getField() + " " + error.getDefaultMessage())
-            .orElse("Validation failed");
-        return build(HttpStatus.BAD_REQUEST, message, request);
+        Map<String, Object> fields = new LinkedHashMap<>();
+        ex.getBindingResult().getFieldErrors().forEach(error ->
+            fields.put(error.getField(), error.getDefaultMessage()));
+        return build(HttpStatus.BAD_REQUEST, "Validation failed", request, fields);
     }
 
     @ExceptionHandler(Exception.class)
@@ -33,9 +32,16 @@ public class GlobalExceptionHandler {
     }
 
     private ResponseEntity<Map<String, Object>> build(HttpStatus status, String message, HttpServletRequest request) {
+        return build(status, message, request, null);
+    }
+
+    private ResponseEntity<Map<String, Object>> build(HttpStatus status, String message, HttpServletRequest request, Map<String, Object> fields) {
         Map<String, Object> payload = new LinkedHashMap<>();
         payload.put("success", false);
         payload.put("message", message);
+        if (fields != null && !fields.isEmpty()) {
+            payload.put("errors", fields);
+        }
         payload.put("timestamp", Instant.now().toString());
         payload.put("requestId", request.getAttribute(RequestTracingFilter.REQUEST_ID_ATTRIBUTE));
         return ResponseEntity.status(status).body(payload);
