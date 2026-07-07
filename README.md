@@ -11,11 +11,13 @@ There is no separate committed frontend build step.
 
 - Java 11+
 - MongoDB running locally or a `MONGO_URI`
+- `JWT_SECRET` with at least 32 bytes of entropy
 - Optional: Docker for the Kafka booking workflow demo
 
 ## Run Locally
 
 ```powershell
+$env:JWT_SECRET="replace-with-at-least-32-random-bytes"
 .\mvnw spring-boot:run
 ```
 
@@ -35,6 +37,7 @@ Override it with:
 
 ```powershell
 $env:MONGO_URI="mongodb://localhost:27017/criczone"
+$env:JWT_SECRET="replace-with-at-least-32-random-bytes"
 .\mvnw spring-boot:run
 ```
 
@@ -51,6 +54,7 @@ Run Spring with the Kafka workflow publisher and consumer enabled:
 ```powershell
 $env:KAFKA_ENABLED="true"
 $env:KAFKA_BOOTSTRAP_SERVERS="localhost:9092"
+$env:JWT_SECRET="replace-with-at-least-32-random-bytes"
 .\mvnw spring-boot:run
 ```
 

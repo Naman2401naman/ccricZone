@@ -1,5 +1,6 @@
 package com.criczone.demo.config;
 
+import com.criczone.demo.security.AuthRateLimitFilter;
 import com.criczone.demo.security.JwtAuthFilter;
 import java.util.List;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -22,7 +23,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthFilter jwtAuthFilter) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthFilter jwtAuthFilter, AuthRateLimitFilter authRateLimitFilter) throws Exception {
         http
             .csrf(csrf -> csrf.disable())
             .cors(Customizer.withDefaults())
@@ -45,6 +46,7 @@ public class SecurityConfig {
                 .antMatchers(HttpMethod.POST, "/api/users/login", "/api/users/register", "/api/users/signup").permitAll()
                 .antMatchers("/error").permitAll()
                 .anyRequest().authenticated())
+            .addFilterBefore(authRateLimitFilter, UsernamePasswordAuthenticationFilter.class)
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
