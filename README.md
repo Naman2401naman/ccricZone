@@ -26,6 +26,7 @@ Backend and UI:
 - App: `http://localhost:8080`
 - API base: `http://localhost:8080/api`
 - Health: `http://localhost:8080/api/health`
+- Swagger UI: `http://localhost:8080/swagger-ui.html`
 
 The default MongoDB connection is:
 
@@ -62,6 +63,7 @@ Then create or update a booking and inspect its workflow timeline:
 
 ```text
 GET /api/bookings/{bookingId}/workflow
+GET /api/bookings/{bookingId}/history
 GET /api/bookings/workflow/summary
 ```
 
@@ -79,6 +81,8 @@ The API is grouped by domain:
 - `/api/leaderboard`
 - `/api/health`
 - `/api/version`
+
+OpenAPI documentation is available at `/swagger-ui.html` and `/v3/api-docs`.
 
 ## Tests
 

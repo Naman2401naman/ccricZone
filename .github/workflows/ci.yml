@@ -1,0 +1,19 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "11"
+      - name: Run tests
+        run: ./mvnw -B test
+        env:
+          JWT_SECRET: not-a-base64-secret-with-32-bytes!!

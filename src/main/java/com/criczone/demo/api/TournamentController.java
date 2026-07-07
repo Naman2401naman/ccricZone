@@ -7,6 +7,7 @@ import com.criczone.demo.dto.ApiRequests.UpdateStandingsRequest;
 import com.criczone.demo.dto.ApiRequests.UpdateStatusRequest;
 import com.criczone.demo.dto.RequestMaps;
 import com.criczone.demo.service.TournamentService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.Map;
 import javax.validation.Valid;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/tournaments")
+@Tag(name = "Tournaments", description = "Tournament creation, registration, fixtures, standings, and status")
 public class TournamentController {
 
     private final TournamentService tournamentService;

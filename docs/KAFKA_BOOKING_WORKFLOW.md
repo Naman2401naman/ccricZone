@@ -38,7 +38,29 @@ The consumer stores each event in MongoDB and also updates a latest-state snapsh
 - `PUT /api/bookings/{id}/cancel`: Cancels a booking and publishes `BOOKING_CANCELLED`.
 - `PUT /api/bookings/{id}/payment`: Updates payment state and publishes `BOOKING_PAYMENT_UPDATED`.
 - `GET /api/bookings/{id}/workflow`: Returns the workflow timeline and latest snapshot for one booking.
+- `GET /api/bookings/{id}/history`: Alias for the workflow timeline and latest snapshot, intended for admin/debug demos.
 - `GET /api/bookings/workflow/summary`: Returns grouped workflow counts visible to the current user.
+
+## Event Schema
+
+`BookingWorkflowEvent` is the Kafka payload published by the booking service and consumed into MongoDB projections.
+
+| Field | Type | Purpose |
+| --- | --- | --- |
+| `eventId` | `String` | Unique event id used for idempotency. Duplicate ids are skipped by `existsByEventId`. |
+| `bookingId` | `String` | Booking aggregate id and snapshot id. |
+| `turfId` | `String` | Turf linked to the booking. |
+| `userId` | `String` | User who owns the booking. |
+| `ownerId` | `String` | Turf owner, used for owner-specific workflow summaries. |
+| `eventType` | `BookingWorkflowEventType` | Lifecycle transition: `BOOKING_CREATED`, `BOOKING_CANCELLED`, or `BOOKING_PAYMENT_UPDATED`. |
+| `bookingStatus` | `String` | Current booking status after the transition. |
+| `paymentStatus` | `String` | Current payment status after the transition. |
+| `amount` | `double` | Booking amount captured for billing projections. |
+| `triggeredByUserId` | `String` | User who initiated the transition. |
+| `requestId` | `String` | Request tracing id from `RequestTracingFilter`. |
+| `source` | `String` | API route that generated the event. |
+| `metadata` | `Map<String,Object>` | Transition-specific context such as slot details, invoice number, payment method, or cancellation time. |
+| `occurredAt` | `Instant` | Event time used to order timelines. |
 
 ## Configuration
 

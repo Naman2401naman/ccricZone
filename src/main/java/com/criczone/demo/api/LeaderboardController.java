@@ -1,6 +1,7 @@
 package com.criczone.demo.api;
 
 import com.criczone.demo.service.LeaderboardService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.Map;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/leaderboard")
+@Tag(name = "Leaderboard", description = "Global cricket rankings by batting, bowling, and all-round metrics")
 public class LeaderboardController {
 
     private final LeaderboardService leaderboardService;

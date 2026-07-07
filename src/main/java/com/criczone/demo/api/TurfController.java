@@ -6,6 +6,7 @@ import com.criczone.demo.dto.ApiRequests.NearbyTurfsRequest;
 import com.criczone.demo.dto.ApiRequests.UpdateTurfRequest;
 import com.criczone.demo.dto.RequestMaps;
 import com.criczone.demo.service.TurfService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.Map;
 import javax.validation.Valid;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/turfs")
+@Tag(name = "Turfs", description = "Turf inventory, nearby lookup, ownership, updates, and deletes")
 public class TurfController {
 
     private final TurfService turfService;

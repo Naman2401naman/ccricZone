@@ -7,6 +7,7 @@ import com.criczone.demo.dto.ApiRequests.UpdateProfileRequest;
 import com.criczone.demo.dto.ApiRequests.UpdateRoleRequest;
 import com.criczone.demo.dto.RequestMaps;
 import com.criczone.demo.service.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.Map;
 import javax.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/users")
+@Tag(name = "Users", description = "Registration, login, profiles, player discovery, and social actions")
 public class UserController {
 
     private final UserService userService;

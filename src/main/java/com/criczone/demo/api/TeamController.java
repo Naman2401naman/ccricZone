@@ -7,6 +7,7 @@ import com.criczone.demo.dto.ApiRequests.RespondInvitationRequest;
 import com.criczone.demo.dto.ApiRequests.UpdateTeamRequest;
 import com.criczone.demo.dto.RequestMaps;
 import com.criczone.demo.service.TeamService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.Map;
 import javax.validation.Valid;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/teams")
+@Tag(name = "Teams", description = "Reusable teams, invitations, suggestions, and randomization")
 public class TeamController {
 
     private final TeamService teamService;

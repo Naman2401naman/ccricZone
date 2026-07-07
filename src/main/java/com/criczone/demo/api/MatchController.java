@@ -7,6 +7,7 @@ import com.criczone.demo.dto.ApiRequests.ScoreRequest;
 import com.criczone.demo.dto.ApiRequests.TossRequest;
 import com.criczone.demo.dto.RequestMaps;
 import com.criczone.demo.service.MatchService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.Map;
 import javax.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/matches")
+@Tag(name = "Matches", description = "Match creation, toss, live scoring, completion, and reports")
 public class MatchController {
 
     private final MatchService matchService;

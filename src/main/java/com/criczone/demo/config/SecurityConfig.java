@@ -38,7 +38,10 @@ public class SecurityConfig {
                     "/sw.js",
                     "/runtime-config.js",
                     "/styles.css",
-                    "/script.js")
+                    "/script.js",
+                    "/swagger-ui.html",
+                    "/swagger-ui/**",
+                    "/v3/api-docs/**")
                 .permitAll()
                 .antMatchers("/icons/**", "/assets/**", "/css/**", "/js/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/health", "/api/version", "/api/matches/**", "/api/tournaments/**", "/api/turfs/**", "/api/leaderboard/**", "/api/posts/**").permitAll()

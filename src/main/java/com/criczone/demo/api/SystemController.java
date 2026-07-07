@@ -1,11 +1,13 @@
 package com.criczone.demo.api;
 
 import com.criczone.demo.service.SystemService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.Map;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Tag(name = "System", description = "Health and version endpoints")
 public class SystemController {
 
     private final SystemService systemService;

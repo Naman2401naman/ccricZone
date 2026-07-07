@@ -6,6 +6,7 @@ import com.criczone.demo.dto.ApiRequests.UpdatePaymentRequest;
 import com.criczone.demo.dto.RequestMaps;
 import com.criczone.demo.service.BookingService;
 import com.criczone.demo.support.RequestTracingFilter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.Map;
 import javax.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/bookings")
+@Tag(name = "Bookings", description = "Turf bookings, billing, CSV exports, and workflow history")
 public class BookingController {
 
     private final BookingService bookingService;

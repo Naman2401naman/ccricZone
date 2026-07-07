@@ -5,6 +5,7 @@ import com.criczone.demo.dto.ApiRequests.CommentRequest;
 import com.criczone.demo.dto.ApiRequests.CreatePostRequest;
 import com.criczone.demo.dto.RequestMaps;
 import com.criczone.demo.service.PostService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.Map;
 import javax.validation.Valid;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/posts")
+@Tag(name = "Posts", description = "Social feed posts, likes, comments, and user feeds")
 public class PostController {
 
     private final PostService postService;
