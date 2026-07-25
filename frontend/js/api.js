@@ -41,6 +41,23 @@ const readStoredApiBase = () => {
   }
 };
 
+const isLocalApiBase = (apiBase = "") => {
+  try {
+    const parsed = new URL(normalizeApiBase(apiBase));
+    return ["localhost", "127.0.0.1", "::1"].includes(parsed.hostname);
+  } catch (_error) {
+    return false;
+  }
+};
+
+const clearStoredApiBase = () => {
+  try {
+    localStorage.removeItem("criczone_api_base");
+  } catch (_error) {
+    // Storage can be unavailable in privacy-restricted contexts.
+  }
+};
+
 const DEFAULT_API_BASE = "";
 const homeSnapshot = { matches: [], tournaments: [] };
 let hostTeamsCache = [];
@@ -76,11 +93,21 @@ const getSameOriginApiBase = () => {
   }
 };
 
-const getCurrentApiBase = () =>
-  normalizeApiBase(window.__API_BASE__) ||
-  readStoredApiBase() ||
-  getSameOriginApiBase() ||
-  normalizeApiBase(DEFAULT_API_BASE);
+const getCurrentApiBase = () => {
+  const runtimeApiBase = normalizeApiBase(window.__API_BASE__);
+  const storedApiBase = readStoredApiBase();
+
+  if (runtimeApiBase && storedApiBase && isLocalApiBase(storedApiBase)) {
+    clearStoredApiBase();
+  }
+
+  return (
+    runtimeApiBase ||
+    storedApiBase ||
+    getSameOriginApiBase() ||
+    normalizeApiBase(DEFAULT_API_BASE)
+  );
+};
 
 const API_BASE = getCurrentApiBase();
 const nativeFetch = window.fetch.bind(window);
@@ -228,6 +255,11 @@ const checkApiHealth = async (apiBase) => {
       return { ok: false, error: `Health endpoint returned ${response.status}.` };
     }
 
+    const contentType = response.headers.get("Content-Type") || "";
+    if (!contentType.toLowerCase().includes("application/json")) {
+      return { ok: false, error: "Health endpoint returned HTML instead of API JSON." };
+    }
+
     const payload = await response.json().catch(() => ({}));
     if (payload && payload.success === false) {
       return { ok: false, error: payload.message || "Health response is not valid." };
@@ -309,7 +341,7 @@ function registerServiceWorker() {
 
   window.addEventListener("load", async () => {
     try {
-      const registration = await navigator.serviceWorker.register("/sw.js?v=8", {
+      const registration = await navigator.serviceWorker.register("/sw.js?v=9", {
         updateViaCache: "none"
       });
       await registration.update();

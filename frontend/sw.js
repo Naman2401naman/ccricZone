@@ -1,17 +1,16 @@
-const STATIC_CACHE = "criczone-static-v8";
+const STATIC_CACHE = "criczone-static-v9";
 const STATIC_ASSETS = [
   "/index.html",
-  "/styles.css?v=3",
-  "/js/api.js",
-  "/js/ui.js",
-  "/js/teams.js",
-  "/js/matches.js",
-  "/js/bookings.js",
-  "/js/players.js",
-  "/js/turfs.js",
-  "/js/tournaments.js",
-  "/js/app.js",
-  "/runtime-config.js",
+  "/styles.css?v=4",
+  "/js/api.js?v=4",
+  "/js/ui.js?v=4",
+  "/js/teams.js?v=4",
+  "/js/matches.js?v=4",
+  "/js/bookings.js?v=4",
+  "/js/players.js?v=4",
+  "/js/turfs.js?v=4",
+  "/js/tournaments.js?v=4",
+  "/js/app.js?v=4",
   "/manifest.webmanifest",
   "/icons/icon-192.png",
   "/icons/icon-512.png"
@@ -59,6 +58,10 @@ self.addEventListener("fetch", (event) => {
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
   if (url.pathname.startsWith("/api/")) return;
+  if (url.pathname === "/runtime-config.js") {
+    event.respondWith(fetch(request, { cache: "no-store" }));
+    return;
+  }
 
   event.respondWith(
     fetch(request)

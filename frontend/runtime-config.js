@@ -1,2 +1,2 @@
-// Change this file at deploy time when the API is hosted elsewhere.
-window.__API_BASE__ = "http://localhost:8080/api";
+// Set this to the deployed Spring Boot API URL, for example https://your-backend.onrender.com/api.
+window.__API_BASE__ = "";
