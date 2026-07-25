@@ -21,14 +21,14 @@ public class SystemService {
         this.mongoTemplate = mongoTemplate;
     }
 
-    @Cacheable(CacheNames.SYSTEM_HEALTH)
     public Map<String, Object> health() {
+        boolean mongoConnected = isMongoConnected();
         Map<String, Object> payload = new LinkedHashMap<>();
-        payload.put("success", true);
-        payload.put("status", "ok");
+        payload.put("success", mongoConnected);
+        payload.put("status", mongoConnected ? "ok" : "degraded");
         payload.put("timestamp", Instant.now().toString());
         payload.put("uptimeSec", ManagementFactory.getRuntimeMXBean().getUptime() / 1000);
-        payload.put("mongodb", mongoStatus());
+        payload.put("mongodb", mongoConnected ? "connected" : "disconnected");
         payload.put("users", safeUserCount());
         return payload;
     }
@@ -38,12 +38,12 @@ public class SystemService {
         return Map.of("success", true, "version", "1.0.0-spring");
     }
 
-    private String mongoStatus() {
+    private boolean isMongoConnected() {
         try {
             mongoTemplate.executeCommand("{ ping: 1 }");
-            return "connected";
+            return true;
         } catch (RuntimeException error) {
-            return "disconnected";
+            return false;
         }
     }
 

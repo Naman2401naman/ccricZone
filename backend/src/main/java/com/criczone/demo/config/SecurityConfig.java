@@ -68,6 +68,7 @@ public class SecurityConfig {
                 "http://127.0.0.1:*",
                 "https://localhost:*",
                 "https://127.0.0.1:*",
+                "https://*.vercel.app",
                 "https://*.onrender.com",
                 "capacitor://localhost",
                 "ionic://localhost"));

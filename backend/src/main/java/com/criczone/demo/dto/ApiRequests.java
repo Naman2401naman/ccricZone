@@ -349,6 +349,23 @@ public final class ApiRequests {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class TeamSegregationRequest {
+        private List<String> teamIds;
+        private String venue;
+        private Integer bucketCount = 2;
+        private Integer minimumMatches = 0;
+
+        public List<String> getTeamIds() { return teamIds; }
+        public void setTeamIds(List<String> teamIds) { this.teamIds = teamIds; }
+        public String getVenue() { return venue; }
+        public void setVenue(String venue) { this.venue = venue; }
+        public Integer getBucketCount() { return bucketCount; }
+        public void setBucketCount(Integer bucketCount) { this.bucketCount = bucketCount; }
+        public Integer getMinimumMatches() { return minimumMatches; }
+        public void setMinimumMatches(Integer minimumMatches) { this.minimumMatches = minimumMatches; }
+    }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class CreateTournamentRequest {
         @NotBlank
         private String name;
