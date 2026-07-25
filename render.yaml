@@ -10,6 +10,8 @@ services:
         sync: false
       - key: MONGO_URI
         sync: false
+      - key: MONGO_DATABASE
+        value: "criczone"
       - key: CLIENT_URL
         sync: false
       - key: ALLOW_ALL_ORIGINS

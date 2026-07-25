@@ -19,6 +19,11 @@ project. The current Vercel backend URL is serving HTML for `/api/health`,
 which means the frontend is not talking to the Spring API. Deploy the backend
 as a long-running Docker web service, for example on Render or Railway.
 
+The backend no longer crashes during startup when `JWT_SECRET` is missing, so
+`/api/health` can still report the configuration problem. Authentication and
+token creation still require `JWT_SECRET` to be a real secret of at least 32
+bytes.
+
 ### Recommended: Render
 
 This repo includes `render.yaml` for the backend. In Render:
@@ -31,6 +36,7 @@ This repo includes `render.yaml` for the backend. In Render:
    - Health Check Path: `/api/health`
 3. Add production environment variables:
    - `MONGO_URI`: MongoDB Atlas connection string
+   - `MONGO_DATABASE`: database name, for example `criczone`
    - `JWT_SECRET`: at least 32 random bytes/characters
    - `CLIENT_URL`: your frontend URL, for example `https://your-frontend.vercel.app`
    - `ALLOW_ALL_ORIGINS`: `false`
@@ -54,41 +60,58 @@ MongoDB is working only when the response includes:
 If it says `mongodb: "disconnected"`, fix the Atlas connection string and
 Atlas Network Access rules, then redeploy.
 
+If it says `jwtSecret: "missing-or-too-short"`, add or fix the `JWT_SECRET`
+environment variable and redeploy. A valid value can be any random string of at
+least 32 bytes.
+
 ### Vercel Note
 
-The backend is a Spring Boot app in `backend/`, but Vercel is not the right
-target for this long-running API in its current form.
+The backend is a Spring Boot app in `backend/`. If you deploy it on Vercel from
+GitHub, create a separate Vercel project for the backend and set:
 
-Deploy from `backend/`:
+- Root Directory: `backend`
+- Framework Preset: Other
+- Runtime/Framework: Docker or Container, if Vercel shows that option
+- Build Command: leave empty
+- Output Directory: leave empty
+- Install Command: leave empty
 
-```powershell
-vercel deploy --prod
-```
-
-The backend includes Dockerfiles, but the current deployed Vercel URL is not
-running the API. Prefer Render/Railway for this backend.
+The backend includes `backend/Dockerfile`. Prefer Render/Railway for this
+long-running API if Vercel keeps returning serverless function errors.
 
 Required Vercel production environment variables:
 
 - `MONGO_URI`
+- `MONGO_DATABASE`
 - `JWT_SECRET`
 - `CLIENT_URL`
 - `ALLOW_ALL_ORIGINS`
+- `KAFKA_ENABLED`
+
+Important: the Atlas URI must either include a database path, such as
+`mongodb+srv://USER:PASSWORD@cluster.example.mongodb.net/criczone?retryWrites=true&w=majority`,
+or you must set `MONGO_DATABASE=criczone`. Without a database name Spring Boot
+fails with `Database name must not be empty`.
 
 ## Connect Frontend To Backend
 
-After the backend is live, edit `frontend/runtime-config.js`:
+After the backend is live, deploy the frontend as a separate Vercel project:
+
+- Root Directory: `frontend`
+- Framework Preset: Other
+- Build Command: `npm run build`
+- Output Directory: `dist`
+- Install Command: `npm install`
+
+Set this frontend production environment variable:
+
+- `API_BASE_URL`: your backend API URL, for example `https://YOUR-BACKEND.vercel.app/api`
+
+If `API_BASE_URL` is not set, the build uses `frontend/runtime-config.js`.
+For local testing, edit that file directly:
 
 ```js
-window.__API_BASE__ = "https://YOUR-BACKEND.onrender.com/api";
-```
-
-Then rebuild and redeploy the frontend:
-
-```powershell
-cd frontend
-npm.cmd run build
-vercel deploy --prod
+window.__API_BASE__ = "http://localhost:8080/api";
 ```
 
 ## Previous Blocker

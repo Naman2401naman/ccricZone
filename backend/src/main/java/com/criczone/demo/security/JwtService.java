@@ -9,7 +9,6 @@ import io.jsonwebtoken.security.Keys;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.Optional;
-import javax.annotation.PostConstruct;
 import javax.crypto.SecretKey;
 import org.springframework.stereotype.Service;
 
@@ -27,9 +26,17 @@ public class JwtService {
         this.appProperties = appProperties;
     }
 
-    @PostConstruct
     public void validateSigningKey() {
         this.signingKey = Keys.hmacShaKeyFor(resolveSigningKeyBytes());
+    }
+
+    public boolean isSigningKeyConfigured() {
+        try {
+            resolveSigningKeyBytes();
+            return true;
+        } catch (IllegalStateException error) {
+            return false;
+        }
     }
 
     public String generateToken(String userId, String email, String role) {

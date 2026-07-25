@@ -28,6 +28,7 @@ Backend URLs:
 - Swagger UI: `http://localhost:8080/swagger-ui.html`
 
 The default MongoDB connection is `mongodb://localhost:27017/criczone`. Override it with `MONGO_URI`.
+If the URI does not include a database path, set `MONGO_DATABASE=criczone`.
 
 ## Run Frontend
 
@@ -46,21 +47,24 @@ The frontend reads its API URL from `frontend/runtime-config.js`:
 window.__API_BASE__ = "http://localhost:8080/api";
 ```
 
-For production frontend deployment, change that value to your deployed backend API URL.
+For production frontend deployment from GitHub/Vercel, set `API_BASE_URL` in
+the frontend Vercel project. The build writes that value into `dist/runtime-config.js`.
 
 ## Separate Deployment
 
 Backend deployment:
 
-1. Deploy the `backend/` folder as the Spring Boot service.
-2. Set `JWT_SECRET`, `MONGO_URI`, and `CLIENT_URL`.
-3. Add Kafka env vars only if booking workflow projections are enabled.
+1. Create a backend project with root directory `backend`.
+2. Use the Dockerfile/container runtime when available.
+3. Set `JWT_SECRET`, `MONGO_URI`, `MONGO_DATABASE`, `CLIENT_URL`, `ALLOW_ALL_ORIGINS=false`, and `KAFKA_ENABLED=false`.
+4. Add Kafka env vars only if booking workflow projections are enabled.
 
 Frontend deployment:
 
-1. Edit `frontend/runtime-config.js` to point at the deployed backend.
-2. Run `npm run build` from `frontend/`.
-3. Deploy `frontend/dist/` to a static host.
+1. Create a frontend project with root directory `frontend`.
+2. Set `API_BASE_URL` to the deployed backend API URL, ending in `/api`.
+3. Run `npm run build` from `frontend/`.
+4. Deploy `frontend/dist/` to a static host.
 
 ## Tests
 

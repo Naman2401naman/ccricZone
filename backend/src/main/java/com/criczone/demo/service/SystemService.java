@@ -2,6 +2,7 @@ package com.criczone.demo.service;
 
 import com.criczone.demo.config.CacheNames;
 import com.criczone.demo.repo.UserRepository;
+import com.criczone.demo.security.JwtService;
 import java.lang.management.ManagementFactory;
 import java.time.Instant;
 import java.util.LinkedHashMap;
@@ -13,10 +14,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class SystemService {
 
+    private final JwtService jwtService;
     private final UserRepository userRepository;
     private final MongoTemplate mongoTemplate;
 
-    public SystemService(UserRepository userRepository, MongoTemplate mongoTemplate) {
+    public SystemService(JwtService jwtService, UserRepository userRepository, MongoTemplate mongoTemplate) {
+        this.jwtService = jwtService;
         this.userRepository = userRepository;
         this.mongoTemplate = mongoTemplate;
     }
@@ -29,6 +32,7 @@ public class SystemService {
         payload.put("timestamp", Instant.now().toString());
         payload.put("uptimeSec", ManagementFactory.getRuntimeMXBean().getUptime() / 1000);
         payload.put("mongodb", mongoConnected ? "connected" : "disconnected");
+        payload.put("jwtSecret", jwtService.isSigningKeyConfigured() ? "configured" : "missing-or-too-short");
         payload.put("users", safeUserCount());
         return payload;
     }
@@ -54,4 +58,5 @@ public class SystemService {
             return null;
         }
     }
+
 }
