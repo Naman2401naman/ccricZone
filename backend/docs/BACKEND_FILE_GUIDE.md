@@ -14,6 +14,7 @@ This document explains what each important file in the `backend/` Spring Boot mo
 - `api/PostController.java`: Supports social feed posts, likes, comments, and per-user post lookups.
 - `api/SystemController.java`: Exposes health and version endpoints and checks MongoDB connectivity.
 - `api/TeamController.java`: Creates and manages teams, members, invitations, suggestions, and team randomization.
+- `api/TeamSegregationController.java`: Trains the team performance analysis model and segregates teams into balanced groups from past turf/match performance.
 - `api/TournamentController.java`: Handles tournament creation, registrations, fixture generation, standings, playoffs, and status changes.
 - `api/TurfController.java`: Manages turf creation, lookup, nearby search, owner inventory, updates, and deletes.
 - `api/UserController.java`: Handles registration, login, profile updates, player search, public player views, leaderboards, and follow/unfollow flows.
@@ -37,6 +38,13 @@ This document explains what each important file in the `backend/` Spring Boot mo
 - `domain/TournamentDocument.java`: MongoDB tournament document storing teams, schedule, standings, knockout data, media, and status.
 - `domain/TurfDocument.java`: MongoDB turf document containing owner, location, amenities, pricing, and active state.
 - `domain/UserDocument.java`: MongoDB user document containing identity, profile, rankings, stats, teams, tournaments, and social data.
+
+## Analysis Model
+
+- `model/teamsegregation/TeamPerformanceStats.java`: Team-level feature vector used for analysis: win rate, run difference, wickets, experience, score, and tier.
+- `model/teamsegregation/TeamSegregationModel.java`: Lightweight Java training and inference model that searches feature weights from completed match outcomes and creates balanced groups.
+- `model/teamsegregation/TeamSegregationTrainingResult.java`: Captures trained weights, training accuracy, match count, and timestamp.
+- `model/teamsegregation/HistoricalMatchOutcome.java`: Small training label object linking both teams in a completed match to the winning team.
 
 ## Repositories
 

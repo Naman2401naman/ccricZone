@@ -60,6 +60,39 @@ Workflow endpoints:
 - `GET /api/bookings/{bookingId}/history`
 - `GET /api/bookings/workflow/summary`
 
+## Team Segregation Analysis Model
+
+The backend includes a lightweight Java model for team performance analysis. It trains from completed match history, learns feature weights for win rate, run difference, wicket difference, and experience, then uses those weights to rank and segregate teams into balanced groups.
+
+Endpoints:
+
+- `POST /api/team-segregation/train`: train/analyze from completed matches.
+- `GET /api/team-segregation/performance?venue=Arena Turf`: list ranked team performance for a turf.
+- `POST /api/team-segregation`: create balanced team groups using the trained scoring model.
+
+Request body:
+
+```json
+{
+  "teamIds": ["teamId1", "teamId2", "teamId3", "teamId4"],
+  "venue": "Arena Turf",
+  "bucketCount": 2,
+  "minimumMatches": 0
+}
+```
+
+## Technical Stack
+
+- Java 11 and Spring Boot 2.7 for the REST API.
+- Spring Web for controllers and JSON APIs.
+- Spring Data MongoDB for users, teams, matches, turfs, bookings, posts, and tournaments.
+- Spring Security with JWT authentication for protected APIs.
+- Spring Validation for request DTO validation.
+- Caffeine/Spring Cache for read-heavy endpoints.
+- Springdoc OpenAPI/Swagger UI for API documentation.
+- Optional Spring Kafka workflow for booking lifecycle projections.
+- Maven for dependency management, builds, and tests.
+
 ## Tests
 
 ```powershell
