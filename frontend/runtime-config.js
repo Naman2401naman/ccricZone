@@ -1,2 +1,2 @@
-// Set this to the deployed Spring Boot API URL, for example https://your-backend.onrender.com/api.
-window.__API_BASE__ = "";
+// Set this to the deployed Spring Boot API URL.
+window.__API_BASE__ = "https://backend-namanchhallani24-gmailcoms-projects.vercel.app/api";
