@@ -16,6 +16,15 @@ public class SystemController {
         this.systemService = systemService;
     }
 
+    @GetMapping("/")
+    public Map<String, Object> root() {
+        return Map.of(
+            "success", true,
+            "name", "CricZone API",
+            "health", "/api/health",
+            "docs", "/swagger-ui.html");
+    }
+
     @GetMapping("/api/health")
     public Map<String, Object> health() {
         return systemService.health();
