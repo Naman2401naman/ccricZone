@@ -3,6 +3,7 @@
 CricZone is now split into two independently deployable apps:
 
 - `frontend/`: Static PWA UI for players, teams, matches, tournaments, turf booking, and billing.
+- 
 - `backend/`: Spring Boot 2.7 API with MongoDB, JWT auth, OpenAPI docs, and optional Kafka booking workflow projections.
 
 ## Repository Structure
@@ -29,7 +30,7 @@ Backend URLs:
 
 The default MongoDB connection is `mongodb://localhost:27017/criczone`. Override it with `MONGO_URI`.
 
-## Run Frontend
+# Run Frontend
 
 ```powershell
 cd frontend
