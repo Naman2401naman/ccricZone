@@ -9,6 +9,8 @@ Spring Boot API for CricZone.
 - `JWT_SECRET` with at least 32 bytes of entropy
 - Optional: Docker for the Kafka booking workflow demo
 
+Copy `.env.example` into your deploy platform settings and replace the sample values.
+
 ## Run Locally
 
 ```powershell
@@ -98,3 +100,7 @@ Request body:
 ```powershell
 .\mvnw test
 ```
+
+## Deployment
+
+Deploy this folder as a Docker web service. See [../DEPLOYMENT.md](../DEPLOYMENT.md) for the Render setup and required environment variables.

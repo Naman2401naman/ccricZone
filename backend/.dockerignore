@@ -1,5 +1,8 @@
 target/
-.mvn/wrapper/maven-wrapper.jar
+.mvn/
 *.log
-*.err
+hs_err_pid*.log
+replay_pid*.log
 .vercel/
+.idea/
+*.iml
